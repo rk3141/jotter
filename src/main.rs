@@ -32,7 +32,7 @@ fn main() {
 
     match command.as_str() {
         "help" => println!(
-            "Notes - (a (secure TODO) note keeping app on the CLI)
+            "Notes - (A very (un)secure tool for writing notes on the cli)
   Commands:
     `help`: help for using this tool
     `all`: List all your notes
