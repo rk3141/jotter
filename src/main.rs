@@ -36,6 +36,9 @@ fn main() {
   Commands:
     `help`: help for using this tool
     `all`: List all your notes
+    `set`: Set a label with content (notes set label 'content')
+    `remove`: Remove label
+    `get`: Get a label
 "
         ),
 
