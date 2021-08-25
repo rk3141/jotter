@@ -2,7 +2,9 @@ use std::{env::args, fs, io::Write};
 
 use serde_json::Value;
 
-fn main() {
+use rocket::tokio;
+#[tokio::main]
+async fn main() {
     let args = args();
     let mut args = args.into_iter();
 
@@ -47,6 +49,10 @@ fn main() {
             let label = args.next().unwrap();
 
             notes::cli::remove::remove(&mut notes, label);
+        }
+
+        "serve" => {
+            notes::cli::serve::serve().await;
         }
 
         _ => {
