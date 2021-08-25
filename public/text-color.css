@@ -1,0 +1,39 @@
+.text-red {
+  color: red;
+}
+
+.text-red-soft {
+  color: rgb(230, 71, 31);
+}
+
+.text-blue {
+  color: blue;
+}
+
+.text-blue-soft {
+  color: rgb(31, 124, 230);
+}
+
+.text-blue-light {
+  color: rgb(79, 156, 245);
+}
+
+.text-green {
+  color: green;
+}
+
+.text-green-soft {
+  color: rgb(154, 230, 31);
+}
+
+.text-yellow {
+  color: yellow;
+}
+
+.text-yellow-soft {
+  color: rgb(230, 177, 31);
+}
+
+.text-white {
+  color: white;
+}

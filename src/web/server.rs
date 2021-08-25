@@ -1,6 +1,9 @@
-use std::path::Path;
+use std::{
+    ops::Deref,
+    path::{Path, PathBuf},
+};
 
-use rocket::fs::NamedFile;
+use rocket::{fs::NamedFile, http::ContentType, tokio::io::AsyncReadExt};
 
 use crate::rocket;
 
@@ -9,9 +12,11 @@ async fn index() -> Option<NamedFile> {
     NamedFile::open(Path::new("public/index.html")).await.ok()
 }
 
-#[get("/static/<file>")]
-async fn static_file(file: String) -> Option<NamedFile> {
-    NamedFile::open(Path::new("public/").join(file)).await.ok()
+#[get("/static/<file..>")]
+async fn static_file(file: PathBuf) -> Option<NamedFile> {
+    let result = NamedFile::open(Path::new("public/").join(file)).await.ok();
+
+    result
 }
 
 pub async fn serve() {

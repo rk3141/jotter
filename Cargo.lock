@@ -542,6 +542,7 @@ dependencies = [
 name = "notes"
 version = "0.1.0"
 dependencies = [
+ "mime",
  "pallete",
  "rocket",
  "serde_json",
