@@ -1,8 +1,8 @@
 use pallete::{printfg, println_fg, Color};
 use serde_json::Value;
-use std::{env, fs};
+use std::{env, fs, path::PathBuf};
 
-pub fn remove(notes: &mut Value, label: String) {
+pub fn remove(notes: &mut Value, label: String, file_path: &PathBuf) {
     let notes_arr = notes["notes"].clone().as_array().unwrap().clone();
 
     let note = notes_arr
@@ -31,6 +31,6 @@ pub fn remove(notes: &mut Value, label: String) {
         }
     };
 
-    fs::write("notes", data_to_write).unwrap();
+    fs::write(file_path, data_to_write).unwrap();
     println_fg!(Color::Red, "Removed label {:?}", label);
 }

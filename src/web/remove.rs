@@ -1,9 +1,9 @@
 use serde_json::Value;
-use std::{env, fs};
+use std::{env, fs, path::PathBuf};
 
 use super::NotesResponse;
 
-pub fn remove(notes: &mut Value, label: String) -> NotesResponse {
+pub fn remove(notes: &mut Value, label: String, file_path: &PathBuf) -> NotesResponse {
     let notes_arr = notes["notes"].clone().as_array().unwrap().clone();
 
     let note = notes_arr
@@ -30,7 +30,7 @@ pub fn remove(notes: &mut Value, label: String) -> NotesResponse {
             }
         };
 
-        fs::write("notes", data_to_write).unwrap();
+        fs::write(file_path, data_to_write).unwrap();
         NotesResponse::RemoveSucess
     }
 }

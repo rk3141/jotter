@@ -1,7 +1,9 @@
+use std::path::PathBuf;
+
 use pallete::{printfg, println_fg, Color};
 use serde_json::{json, Value};
 
-pub fn set(notes: &mut Value, label: String, note: String) {
+pub fn set(notes: &mut Value, label: String, note: String, file_path: &PathBuf) {
     let note: Value = serde_json::from_value(json!({ "label": label,"data": note })).unwrap();
 
     let mut notes_arr = notes["notes"].clone().as_array().unwrap().clone();
@@ -25,7 +27,7 @@ pub fn set(notes: &mut Value, label: String, note: String) {
         serde_json::ser::to_string(&notes).unwrap()
     };
 
-    std::fs::write("notes", data_to_write).unwrap();
+    std::fs::write(file_path, data_to_write).unwrap();
 
     println_fg!(Color::Green, "Set label sucessfully");
 }
