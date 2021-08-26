@@ -1,20 +1,13 @@
-use pallete::{print_fg, printfg, println_fg, Color};
+use super::NotesResponse;
 use serde_json::Value;
 
-pub fn all(notes: Value) {
+pub fn all(notes: Value) -> NotesResponse {
     let notes = &notes["notes"];
     let notes = notes.as_array().unwrap();
 
-    for note in notes {
-        println_fg!(Color::Cyan, "{}", note["label"].as_str().unwrap());
-    }
-
-    print!("You have ");
-
     if notes.len() == 0 {
-        println!("no notes :'(");
+        NotesResponse::NoNotes
     } else {
-        print_fg!(Color::Green, "{}", notes.len());
-        println!(" note{}", if notes.len() > 1 { "s" } else { "" });
+        NotesResponse::SomeNotes(notes.to_vec())
     }
 }

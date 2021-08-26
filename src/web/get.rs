@@ -1,7 +1,8 @@
-use pallete::{print_fg, printfg, println_fg, Color};
 use serde_json::Value;
 
-pub fn get(notes: Value, label: String) {
+use super::NotesResponse;
+
+pub fn get(notes: Value, label: String) -> NotesResponse {
     let notes_arr = notes["notes"].clone();
     let notes_arr = notes_arr.as_array().unwrap().clone();
 
@@ -14,12 +15,10 @@ pub fn get(notes: Value, label: String) {
     });
 
     if note.is_null() {
-        println_fg!(Color::Red, "Label doesnt exist. maybe a typo");
+        NotesResponse::GetNoteNotFound
     } else {
         let note = note["data"].as_str().unwrap();
 
-        print_fg!(Color::Green, "{}", label);
-        println!(":");
-        println!("{}", note);
+        NotesResponse::GetNoteFound(note.to_string())
     }
 }

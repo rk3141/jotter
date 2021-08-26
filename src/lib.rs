@@ -4,7 +4,9 @@ pub extern crate rocket;
 pub mod cli;
 pub mod web;
 
-pub async fn run(args: Vec<String>, web: bool) {
+use crate::web::NotesResponse;
+
+pub async fn run(args: Vec<String>, web: bool) -> Option<NotesResponse> {
     use serde_json::Value;
     use std::fs;
     use std::io::Write;
@@ -31,7 +33,37 @@ pub async fn run(args: Vec<String>, web: bool) {
         .expect("Parsing error. try removing `notes` and then run `notes help`");
 
     if web {
-        println!("Web version not ready yet")
+        Some(match command.as_str() {
+            "all" => web::all::all(notes),
+
+            "set" => {
+                let label = args.next();
+                let note = args.next();
+
+                if label.as_ref().and(note.as_ref()).is_some() {
+                    let label = label.unwrap();
+                    let note = note.unwrap();
+
+                    web::set::set(&mut notes, label, note)
+                } else {
+                    NotesResponse::CommandError
+                }
+            }
+
+            "get" => {
+                let label = args.next().unwrap();
+
+                web::get::get(notes, label)
+            }
+
+            "remove" => {
+                let label = args.next().unwrap();
+
+                web::remove::remove(&mut notes, label)
+            }
+
+            _ => NotesResponse::InvalidCommand,
+        })
     } else {
         match command.as_str() {
             "help" => cli::help::help(),
@@ -64,6 +96,7 @@ pub async fn run(args: Vec<String>, web: bool) {
             _ => {
                 println!("use `notes help` for info on how to use this");
             }
-        }
+        };
+        None
     }
 }

@@ -19,12 +19,10 @@ pub fn set(notes: &mut Value, label: String, note: String) {
 
     notes["notes"] = serde_json::value::to_value(notes_arr).unwrap();
 
-    let data_to_write = {
-        if std::env::var("PRETTY").is_ok() {
-            serde_json::ser::to_string_pretty(&notes).unwrap()
-        } else {
-            serde_json::ser::to_string(&notes).unwrap()
-        }
+    let data_to_write = if std::env::var("PRETTY").is_ok() {
+        serde_json::ser::to_string_pretty(&notes).unwrap()
+    } else {
+        serde_json::ser::to_string(&notes).unwrap()
     };
 
     std::fs::write("notes", data_to_write).unwrap();
