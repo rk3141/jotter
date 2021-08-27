@@ -13,8 +13,7 @@ pub fn set(notes: &mut Value, label: String, note: String, file_path: &PathBuf) 
         .fold(false, |acc, v| acc || v["label"].as_str().unwrap() == label)
     {
         println_fg!(Color::Red, "Label already exists");
-
-        return;
+        panic!("label already exists");
     }
 
     notes_arr.push(note);

@@ -15,6 +15,7 @@ pub fn get(notes: Value, label: String) {
 
     if note.is_null() {
         println_fg!(Color::Red, "Label doesnt exist. maybe a typo");
+        panic!("label not found");
     } else {
         let note = note["data"].as_str().unwrap();
 
