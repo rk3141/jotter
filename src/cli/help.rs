@@ -1,7 +1,7 @@
 use pallete::{print_fg, printfg, println_fg, Color};
 
 pub fn help() {
-    print_fg!(Color::Cyan, "Notes");
+    print_fg!(Color::Cyan, "Jotter");
     print!(" - ");
     print_fg!(Color::Yellow, "A very ");
 

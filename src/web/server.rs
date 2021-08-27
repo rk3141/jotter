@@ -34,7 +34,7 @@ async fn api_run(command: Json<Command>) -> (ContentType, String) {
     let command: Vec<&String> = command.iter().map(|v| v).collect();
 
     let response = crate::run(
-        vec!["web-notes".to_string()]
+        vec!["web-jotter".to_string()]
             .iter()
             .chain(command)
             .map(|v| v.clone())

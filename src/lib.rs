@@ -16,7 +16,7 @@ pub async fn run(args: Vec<String>, web: bool) -> Option<NotesResponse> {
     let mut args = args.into_iter();
 
     let binname = args.next().unwrap();
-    if !binname.ends_with("notes") {
+    if !binname.ends_with("jotter") {
         println!("ur a pirate huh?");
     }
 
