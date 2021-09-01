@@ -17,8 +17,13 @@ async fn index() -> Option<NamedFile> {
 #[get("/static/<file..>")]
 async fn static_file(file: PathBuf) -> Option<NamedFile> {
     let result = NamedFile::open(Path::new("public/").join(file)).await.ok();
-
-    result
+    if result.is_none() {
+        let result = NamedFile::open(Path::new("~/.jotter/public/").join(file)).await.ok();
+        result
+    }
+    else {
+        result
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
